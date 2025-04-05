@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - MTEJAONLINE</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            background: linear-gradient(to right, #141e30, #243b55);
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .header {
+            font-size: 40px;
+            font-weight: 600;
+            color: #00c0ff;
+            text-shadow: 0 0 10px #00c0ff, 0 0 20px white;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        .header:hover {
+            color: white;
+            text-shadow: 0 0 15px white;
+        }
+
+        .form-container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 20px;
+            width: 50%;
+            margin-top: 30px;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: none;
+        }
+
+        input:focus {
+            outline: none;
+            background: rgba(0, 0, 0, 0.9);
+            box-shadow: 0 0 10px #00c0ff;
+        }
+
+        /* Glowing Effect for Button */
+        button {
+            background-color: #00c0ff;
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: 0.3s ease;
+            box-shadow: 0 0 5px #00c0ff, 0 0 20px #00c0ff;
+        }
+
+        button:hover {
+            background-color: white;
+            color: #00c0ff;
+            box-shadow: 0 0 20px #00c0ff, 0 0 30px #00c0ff;
+            transform: scale(1.05);
+        }
+
+        .contact-info {
+            color: white;
+            font-size: 18px;
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        .contact-info a {
+            color: #00c0ff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .contact-info a:hover {
+            color: white;
+        }
+
+        /* Notification Pop-up */
+        .popup {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 15px;
+            border-radius: 15px;
+            font-size: 20px;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 0 10px white;
+        }
+
+        /* Styles for input fields */
+        .input-field {
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+
+        .input-field:focus {
+            background: rgba(0, 0, 0, 0.9);
+            box-shadow: 0 0 10px #00c0ff;
+        }
+
+        .input-field:focus::placeholder {
+            color: #00c0ff;
+        }
+
+        .product-list {
+            margin-top: 30px;
+            width: 60%;
+        }
+
+        .product-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Pop-up Notification -->
+    <div class="popup" id="popup">Welcome Back, KENGEGA</div>
+
+    <div class="header">Admin Dashboard - MTEJAONLINE</div>
+
+    <div class="form-container">
+        <h2>Upload Product</h2>
+        <form action="upload.php" method="POST" enctype="multipart/form-data">
+            <input type="text" name="name" placeholder="Jina la bidhaa" required class="input-field">
+            <input type="text" name="price" placeholder="Bei ya bidhaa" required class="input-field">
+            <input type="text" name="location" placeholder="Mahali ilipo" required class="input-field">
+            <input type="text" name="contact" placeholder="Namba ya simu" required class="input-field">
+            <input type="file" name="image" required class="input-field">
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+
+    <div class="product-list">
+        <h2>Uploaded Products</h2>
+        <!-- Hapa bidhaa zitajazwa kutoka database -->
+        <?php include 'fetch_products.php'; ?>
+    </div>
+
+    <script>
+        // Function to show pop-up notification after 1 second
+        window.onload = function() {
+            setTimeout(function() {
+                document.getElementById('popup').style.display = 'block';
+                setTimeout(function() {
+                    document.getElementById('popup').style.display = 'none';
+                }, 3000); // hide after 3 seconds
+            }, 1000);
+        };
+
+        // Add glowing effect to input fields when the cursor is inside
+        const inputFields = document.querySelectorAll('.input-field');
+        inputFields.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.style.boxShadow = '0 0 10px #00c0ff';
+            });
+            input.addEventListener('blur', () => {
+                input.style.boxShadow = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
